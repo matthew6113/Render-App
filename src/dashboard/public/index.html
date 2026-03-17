@@ -31,7 +31,7 @@
     </div>
 
     <div id="editor" style="display:none;">
-      <h2 id="editorTitle">Edit Project</h2>
+      <h2 id="editorTitle">Edit Project <span id="saveIndicator" style="display:none; font-size:12px; color:var(--accent); font-weight:400; margin-left:8px;">unsaved</span></h2>
 
       <!-- Basic Info -->
       <div class="section">
@@ -134,9 +134,10 @@
       </div>
 
       <!-- Actions -->
-      <div style="display:flex; gap:12px; margin-bottom:40px;">
+      <div style="display:flex; gap:12px; margin-bottom:40px; align-items:center;">
         <button class="btn btn-primary" onclick="saveProject()">Save Project</button>
         <button class="btn btn-danger" onclick="deleteProject()">Delete</button>
+        <span style="font-size:11px; color:var(--text-dim); margin-left:auto;">Ctrl+S to save &middot; Ctrl+Enter to render</span>
       </div>
     </div>
   </div>
@@ -156,11 +157,14 @@
       </button>
     </div>
 
+    <div id="timelineBar"></div>
+
     <div class="render-status" id="renderStatus" style="display:none;">
       <div class="status-text" id="statusText">Idle</div>
       <div class="progress-bar">
         <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
       </div>
+      <div id="renderError" style="display:none; font-size:11px; color:var(--error); margin-top:8px; max-height:60px; overflow:auto; font-family:monospace; white-space:pre-wrap;"></div>
     </div>
 
     <div id="downloadArea" style="display:none;">
