@@ -1,0 +1,27 @@
+{
+  "projectName": "Oceanwide Center",
+  "hookText": "SF just approved a $1.5B tower",
+  "location": {
+    "lat": 37.7873,
+    "lng": -122.3964,
+    "neighborhood": "SoMa",
+    "address": "First & Mission"
+  },
+  "script": "The 910-foot Oceanwide Center will transform the SoMa skyline. Designed by Foster + Partners, this mixed-use tower includes 265 luxury condos, a 169-room Waldorf Astoria hotel, and 175,000 square feet of retail. After years of delays following the developer's bankruptcy, new ownership is pushing to break ground by late 2026.",
+  "captions": [
+    { "text": "910 ft · 61 stories", "imageIndex": 0 },
+    { "text": "265 condos + Waldorf Astoria hotel", "imageIndex": 1 },
+    { "text": "Designed by Foster + Partners", "imageIndex": 2 }
+  ],
+  "renderImages": [
+    "projects/oceanwide-center/render1.jpg",
+    "projects/oceanwide-center/render2.jpg",
+    "projects/oceanwide-center/render3.jpg"
+  ],
+  "voiceover": "auto",
+  "style": {
+    "hookFontSize": 64,
+    "captionFontSize": 32,
+    "accentColor": "#FF6B35"
+  }
+}
