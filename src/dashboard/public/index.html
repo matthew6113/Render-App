@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SF Reels Generator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/dashboard/styles.css">
+</head>
+<body>
+
+<div class="header">
+  <h1><span>SF</span> Reels Generator</h1>
+  <button class="btn btn-primary" onclick="showNewProject()">+ New Project</button>
+</div>
+
+<div class="app">
+  <!-- Sidebar: Project List -->
+  <div class="sidebar">
+    <h3>Projects</h3>
+    <ul class="project-list" id="projectList"></ul>
+  </div>
+
+  <!-- Main: Editor -->
+  <div class="main" id="mainContent">
+    <div class="empty-state" id="emptyState">
+      <div class="empty-icon">&#127916;</div>
+      <p>Select a project or create a new one to get started</p>
+      <button class="btn btn-primary" onclick="showNewProject()">+ New Project</button>
+    </div>
+
+    <div id="editor" style="display:none;">
+      <h2 id="editorTitle">Edit Project</h2>
+
+      <!-- Basic Info -->
+      <div class="section">
+        <div class="section-title">&#128394; Basic Info</div>
+        <div class="form-group">
+          <label>Project Name</label>
+          <input type="text" id="projectName" placeholder="e.g., Oceanwide Center">
+        </div>
+        <div class="form-group">
+          <label>Hook Text</label>
+          <input type="text" id="hookText" placeholder="e.g., SF just approved a $1.5B tower">
+        </div>
+        <div class="form-group">
+          <label>Voiceover Script</label>
+          <textarea id="script" rows="4" placeholder="The narration script for your reel..."></textarea>
+        </div>
+      </div>
+
+      <!-- Location -->
+      <div class="section">
+        <div class="section-title">&#128205; Location</div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Latitude</label>
+            <input type="number" id="lat" step="0.0001" placeholder="37.7873">
+          </div>
+          <div class="form-group">
+            <label>Longitude</label>
+            <input type="number" id="lng" step="0.0001" placeholder="-122.3964">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Neighborhood</label>
+            <input type="text" id="neighborhood" placeholder="SoMa">
+          </div>
+          <div class="form-group">
+            <label>Address</label>
+            <input type="text" id="address" placeholder="First & Mission">
+          </div>
+        </div>
+      </div>
+
+      <!-- Render Images -->
+      <div class="section">
+        <div class="section-title">&#128444; Render Images</div>
+        <div class="upload-zone" id="uploadZone">
+          <div class="upload-icon">&#128228;</div>
+          <p>Drag & drop images here, or click to browse</p>
+          <p style="font-size:12px; color: var(--text-dim)">JPG, PNG, WebP — up to 50MB each</p>
+          <input type="file" id="fileInput" multiple accept="image/jpeg,image/png,image/webp">
+        </div>
+        <div class="image-grid" id="imageGrid"></div>
+      </div>
+
+      <!-- Captions -->
+      <div class="section">
+        <div class="section-title">&#128172; Captions</div>
+        <div id="captionsList"></div>
+        <button class="btn btn-secondary btn-sm" onclick="addCaption()" style="margin-top:8px;">+ Add Caption</button>
+      </div>
+
+      <!-- Voiceover -->
+      <div class="section">
+        <div class="section-title">&#127908; Voiceover</div>
+        <div class="form-group">
+          <label>Mode</label>
+          <select id="voiceoverMode" onchange="toggleVoiceoverUpload()">
+            <option value="auto">Auto-generate (ElevenLabs)</option>
+            <option value="upload">Upload audio file</option>
+          </select>
+        </div>
+        <div id="voiceoverUploadArea" style="display:none;">
+          <div class="upload-zone" style="padding:20px;">
+            <div class="upload-icon">&#127911;</div>
+            <p>Drop an MP3 file here</p>
+            <input type="file" id="audioInput" accept="audio/mpeg,audio/wav,audio/mp4">
+          </div>
+          <div id="audioFileName" style="font-size:13px; color:var(--text-dim); margin-top:8px;"></div>
+        </div>
+      </div>
+
+      <!-- Style -->
+      <div class="section">
+        <div class="section-title">&#127912; Style</div>
+        <div class="form-row-3">
+          <div class="form-group">
+            <label>Hook Font Size</label>
+            <input type="number" id="hookFontSize" value="64" min="24" max="120">
+          </div>
+          <div class="form-group">
+            <label>Caption Font Size</label>
+            <input type="number" id="captionFontSize" value="32" min="16" max="64">
+          </div>
+          <div class="form-group">
+            <label>Accent Color</label>
+            <input type="color" id="accentColor" value="#FF6B35" style="height:42px; padding:4px;">
+          </div>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div style="display:flex; gap:12px; margin-bottom:40px;">
+        <button class="btn btn-primary" onclick="saveProject()">Save Project</button>
+        <button class="btn btn-danger" onclick="deleteProject()">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right Panel: Preview & Render -->
+  <div class="right-panel">
+    <div>
+      <div class="section-title">&#128064; Preview</div>
+      <div class="preview-container" id="previewContainer">
+        <div class="placeholder">Save your project to see a preview</div>
+      </div>
+    </div>
+
+    <div>
+      <button class="btn btn-primary btn-full" id="renderBtn" onclick="startRender()" disabled>
+        &#127916; Render Reel
+      </button>
+    </div>
+
+    <div class="render-status" id="renderStatus" style="display:none;">
+      <div class="status-text" id="statusText">Idle</div>
+      <div class="progress-bar">
+        <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+      </div>
+    </div>
+
+    <div id="downloadArea" style="display:none;">
+      <a id="downloadLink" class="btn btn-secondary btn-full" download>
+        &#11015; Download MP4
+      </a>
+    </div>
+  </div>
+</div>
+
+<script src="/dashboard/app.js"></script>
+</body>
+</html>

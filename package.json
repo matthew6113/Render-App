@@ -6,23 +6,33 @@
     "preview": "remotion preview",
     "build": "remotion render src/index.ts SFProjectReel",
     "generate-voiceover": "ts-node scripts/generate-voiceover.ts",
-    "render-reel": "ts-node scripts/render-reel.ts"
+    "render-reel": "ts-node scripts/render-reel.ts",
+    "dashboard": "ts-node src/server/index.ts",
+    "dev": "ts-node src/server/index.ts"
   },
   "dependencies": {
     "@remotion/cli": "4.0.242",
     "@remotion/media-utils": "4.0.242",
     "@remotion/player": "4.0.242",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
     "mapbox-gl": "^3.9.4",
+    "multer": "^1.4.5-lts.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "remotion": "4.0.242",
+    "uuid": "^11.1.0",
     "zod": "^3.24.2"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
     "@types/mapbox-gl": "^3.4.1",
+    "@types/multer": "^1.4.12",
     "@types/node": "^22.13.10",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
+    "@types/uuid": "^10.0.0",
     "dotenv": "^16.4.7",
     "ts-node": "^10.9.2",
     "typescript": "^5.7.3"
