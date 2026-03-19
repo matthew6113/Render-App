@@ -1,6 +1,7 @@
 {
   "name": "sf-reels",
   "version": "1.0.0",
+  "main": "electron.js",
   "description": "Remotion-based Instagram Reels generator for SF development projects",
   "scripts": {
     "preview": "remotion preview",
@@ -8,7 +9,39 @@
     "generate-voiceover": "ts-node scripts/generate-voiceover.ts",
     "render-reel": "ts-node scripts/render-reel.ts",
     "dashboard": "ts-node src/server/index.ts",
-    "dev": "ts-node src/server/index.ts"
+    "dev": "ts-node src/server/index.ts",
+    "desktop": "electron .",
+    "dist": "electron-builder --dir",
+    "dist:mac": "electron-builder --mac",
+    "dist:win": "electron-builder --win",
+    "dist:linux": "electron-builder --linux"
+  },
+  "build": {
+    "appId": "com.sfreels.generator",
+    "productName": "SF Reels Generator",
+    "files": [
+      "electron.js",
+      "src/**/*",
+      "public/**/*",
+      "scripts/**/*",
+      "node_modules/**/*",
+      "tsconfig.json",
+      ".env"
+    ],
+    "directories": {
+      "output": "dist-electron"
+    },
+    "mac": {
+      "category": "public.app-category.video",
+      "target": "dmg"
+    },
+    "win": {
+      "target": "portable"
+    },
+    "linux": {
+      "target": "AppImage",
+      "category": "Video"
+    }
   },
   "dependencies": {
     "@remotion/cli": "4.0.242",
@@ -34,6 +67,8 @@
     "@types/react-dom": "^18.3.5",
     "@types/uuid": "^10.0.0",
     "dotenv": "^16.4.7",
+    "electron": "^41.0.3",
+    "electron-builder": "^26.8.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.7.3"
   }

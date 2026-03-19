@@ -46,6 +46,14 @@ dirs.forEach((dir) => {
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
 });
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`\n  🎬 SF Reels Dashboard running at http://localhost:${PORT}\n`);
+});
+
+// Graceful shutdown
+process.on("SIGTERM", () => {
+  server.close(() => process.exit(0));
+});
+process.on("SIGINT", () => {
+  server.close(() => process.exit(0));
 });
